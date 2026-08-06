@@ -1,12 +1,7 @@
 name: AccuKnox Container Scan
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   container-scan:
@@ -22,7 +17,7 @@ jobs:
           accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
           accuknox_label: ${{ secrets.ACCUKNOX_LABEL }}
           accuknox_endpoint: ${{ secrets.ACCUKNOX_ENDPOINT }}
-          image_name: "bkimminich/juice-shop"
+          image_name: "juice-shop"
           tag: "latest"
           severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
           soft_fail: true
