@@ -1,27 +1,20 @@
-name: AccuKnox Container Scan
-
+name: AccuKnox SBOM
 on:
   workflow_dispatch:
-
+  
 jobs:
-  container-scan:
+  sbom:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run AccuKnox Container Scanner
-        uses: accuknox/container-scan-action@latest
-
+      - uses: actions/checkout@v7.0.0
+      - name: Run AccuKnox SBOM (filesystem)
+        uses: accuknox/accuknox-code-analysis@latest
         with:
+          scan_type: "sbom"
           accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
-          accuknox_label: ${{ secrets.ACCUKNOX_LABEL }}
           accuknox_endpoint: ${{ secrets.ACCUKNOX_ENDPOINT }}
-          image_name: "juice-shop"
-          tag: "latest"
-          severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+          accuknox_label: ${{ secrets.ACCUKNOX_LABEL }}
+          sbom_scan_type: "filesystem"
+          sbom_scan_path: "."
+          sbom_project_name: "container-scanning"   # required for SBOM
           soft_fail: true
-          upload_results: true  # (Optional) set true if you want to upload result to Github artefact
-          generate_sbom: true   # (Optional) set true to generate SBOM
-          project_name: "container-scanning"      # (Optional) must match the project name created in the dashboard
-          dockerfile_context: Dockerfile  # Path to Dockerfile for building image before scan
