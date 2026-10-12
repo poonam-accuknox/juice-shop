@@ -24,7 +24,7 @@ jobs:
 
           accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
           accuknox_endpoint: ${{ secrets.ACCUKNOX_ENDPOINT }}
-          accuknox_label: "github"
+          accuknox_label: ${{ secrets.ACCUKNOX_LABEL }}
 
           sbom_scan_type: "image"
           sbom_image_ref: "juice-shop:latest"
