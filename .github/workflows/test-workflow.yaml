@@ -8,7 +8,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Juice Shop repository
+        uses: actions/checkout@v4
+
+      - name: Build Juice Shop container image
+        run: docker build -t juice-shop:latest .
+
+      - name: Verify Docker image
+        run: docker image inspect juice-shop:latest
 
       - name: Run AccuKnox SBOM
         uses: Vickydew1/Accuknox-Code-Analysis@main
@@ -17,7 +24,7 @@ jobs:
 
           accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
           accuknox_endpoint: ${{ secrets.ACCUKNOX_ENDPOINT }}
-          accuknox_label: ${{ secrets.ACCUKNOX_LABEL }}
+          accuknox_label: "github"
 
           sbom_scan_type: "image"
           sbom_image_ref: "juice-shop:latest"
