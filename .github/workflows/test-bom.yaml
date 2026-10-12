@@ -1,4 +1,4 @@
-name: AccuKnox SBOM
+name: AccuKnox SBOM file
 
 on:
   workflow_dispatch:
