@@ -1,0 +1,34 @@
+
+name: AccuKnox Container SBOM Scan
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Juice Shop repository
+        uses: actions/checkout@v4
+
+      - name: Build Juice Shop container image
+        run: docker build -t juice-shop:latest .
+
+      - name: Run AccuKnox Container SBOM Scan
+        uses: Vickydew1/Accuknox-Code-Analysis@main
+        with:
+          scan_type: "sbom"
+          accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
+          accuknox_endpoint: ${{ secrets.ACCUKNOX_ENDPOINT }}
+          accuknox_label: ${{ secrets.ACCUKNOX_LABEL }}
+
+          sbom_scan_type: "image"
+          sbom_image_ref: "juice-shop:latest"
+          sbom_project_name: "testbom"
+
+          soft_fail: true
+          upload_artifact: true  
